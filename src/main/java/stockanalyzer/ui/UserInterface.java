@@ -82,7 +82,7 @@ public class UserInterface
 		try {
 			value = inReader.readLine();
 		} catch (IOException e) {
-			System.out.println("Die Eingabe war Fehlerhaft!");
+			System.out.println("Your input is wrong!");
 		}
 		return value.trim();
 	}
