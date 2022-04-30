@@ -34,19 +34,23 @@ public class Controller {
 
 		System.out.println("The history:");
 
-		System.out.println("Name: " + longName[0] + ", Last highest price: " + gethighprice(quotes));
+		Result highprice = gethighprice(quotes);
+
+		System.out.println("Name: " + highprice.getLongName() + ", Last highest price: " + highprice.getBid());
 
 		System.out.println( "Avarege price: " + getAveragePrice(quotes));
 
 		System.out.println("The number of records in your shares");
 
+		System.out.println( "Avarege price: " + getAmountShares(quotes));
+
 	}
 
-	public double gethighprice(QuoteResponse quotes) throws YahooException {
-		double maxPrice = 0;
+	public Result gethighprice(QuoteResponse quotes) throws YahooException {
+		Result maxPrice;
 
 		try {
-			maxPrice = quotes.getResult().stream().map(Result::getBid).max(Double::compare).get();
+			maxPrice = quotes.getResult().stream().max(Comparator.comparing(Result::getAsk)).get();
 		} catch (NoSuchElementException e) {
 			throw new YahooException("Object didnt found it ");
 		}
@@ -63,5 +67,17 @@ public class Controller {
 		}
 		return avgPrice;
 	}
+	public double getAmountShares(QuoteResponse quotes) throws YahooException
+	{
+		double amountofShares;
+		try {
+			amountofShares = (double) quotes.getResult().stream().count();
 
+		} catch (NoSuchElementException e) {
+
+			throw new YahooException("Object didnt found it ");
+
+		}
+		return amountofShares;
+	}
 	}

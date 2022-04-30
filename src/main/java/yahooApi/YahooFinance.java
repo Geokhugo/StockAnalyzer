@@ -42,7 +42,7 @@ public class YahooFinance {
             in.close();
         } catch (IOException e) {
             //e.printStackTrace();
-            throw new YahooException("Webseite ist nicht erreichbar");
+            throw new YahooException("Website is not reachable");
         }
         return response.toString();
     }

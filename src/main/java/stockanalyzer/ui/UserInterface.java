@@ -65,7 +65,7 @@ public class UserInterface
 		menu.insert("b", "Apple", this::getDataFromCtrl2);
 		menu.insert("c", "OMV", this::getDataFromCtrl3);
 		menu.insert("d", "Activision Blizzard, Inc.", this::getDataFromCtrl4);
-		menu.insert("e", "Compare Options a,b,c und d.", this::getDataFromCtrl5);
+		menu.insert("e", "Compare a,b,c und d.", this::getDataFromCtrl5);
 		menu.insert("f", "Choice User Input:", this::getDataForCustomInput);
 		menu.insert("q", "Quit", null);
 		Runnable choice;
