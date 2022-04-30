@@ -2,6 +2,7 @@ package yahooApi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import stockanalyzer.ui.YahooException;
 import yahooApi.beans.Asset;
 import yahooApi.beans.YahooResponse;
 
@@ -18,7 +19,7 @@ public class YahooFinance {
 
     public static final String URL_YAHOO = "https://query1.finance.yahoo.com/v7/finance/quote?symbols=%s";
 
-    public String requestData(List<String> tickers) {
+    public String requestData(List<String> tickers) throws YahooException {
         //TODO improve Error Handling
         String symbols = String.join(",", tickers);
         String query = String.format(URL_YAHOO, symbols);
@@ -40,7 +41,8 @@ public class YahooFinance {
             }
             in.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            throw new YahooException("Webseite ist nicht erreichbar");
         }
         return response.toString();
     }
@@ -53,7 +55,7 @@ public class YahooFinance {
         return jo;
     }
 
-    public void fetchAssetName(Asset asset) {
+    public void fetchAssetName(Asset asset) throws YahooException {
         YahooFinance yahoo = new YahooFinance();
         List<String> symbols = new ArrayList<>();
         symbols.add(asset.getSymbol());
@@ -73,7 +75,7 @@ public class YahooFinance {
         return returnName;
     }
 
-    public YahooResponse getCurrentData(List<String> tickers) {
+    public YahooResponse getCurrentData(List<String> tickers) throws YahooException {
         String jsonResponse = requestData(tickers);
         ObjectMapper objectMapper = new ObjectMapper();
         YahooResponse result = null;
@@ -82,6 +84,7 @@ public class YahooFinance {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
         return result;
     }
 }
